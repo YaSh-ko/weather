@@ -1,0 +1,257 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+
+}
+
+h2 {
+    font-size: 24px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #333 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+p {
+    font-size: 18px;
+    padding-block: 1px;
+}
+
+.weather-container {
+    width: 50%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-container__form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 45px;
+    border: 2px solid black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    align-items: center;
+    padding-inline: 16px;
+    padding-block: 5px;
+}
+
+.weather-container__form input {
+    font-size: 18px;
+    width: 100%;
+    border: none;
+}
+
+.weather-container__form input:focus {
+    outline: none;
+}
+
+.weather-container__form button {
+    border-radius: 10px;
+    padding-top: 3px;
+}
+
+.weather-container__form button:hover {
+    background-color: #e6e6e6;
+}
+
+.weather-container__weather-content {
+    display: flex;
+}
+.weather-content__wether-today {
+    border: 2px solid black;
+    border-top: none;
+    width: 50%;
+    padding-inline: 16px;
+    padding-block: 20px;
+    border-bottom-left-radius: 10px;
+}
+
+.weather-today__degrees {
+    padding-left: 10px;
+    margin-top: 15px;
+    display: flex;
+}
+
+.weather-today__degrees h1 {
+    display: flex;
+    align-items: flex-start;
+    font-size: 70px;
+}
+
+.weather-today__degree-symbol {
+    display: flex;
+    align-items: flex-start;
+}
+
+.weather-today__icon {
+    margin-top: -20px;
+    display: flex;
+    align-items: center;
+}
+
+.weather-today__city {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.active {
+    .city-like__icon path {
+        fill: red;
+    }
+}
+
+.passive {
+    .city-like__icon path {
+        fill: none;
+    }
+}
+
+.weather-today__city-like-btn:hover {
+    .city-like__icon path {
+        fill: #e6e6e6;
+    }
+}
+
+.weather-content__liked-city {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border: 2px solid black;
+    border-top: none;
+    border-left: none;
+    border-bottom-right-radius: 10px;
+}
+
+.liked-city__added-locations {
+    padding-inline: 16px;
+    padding-block: 20px;
+}
+
+.added-locations__header::before {
+    content: "Добавленные города";
+}
+
+@media (max-width: 1256px) {
+    .added-locations__header::before {
+        content: "Избранное";
+    }
+}
+
+.liked-city__line {
+    height: 2px;
+    width: 100%;
+    background-color: black;
+}
+
+.liked-city__city-list {
+    max-height: 200px;
+    margin-top: 10px;
+    padding-inline: 8px;
+    overflow: auto;
+}
+
+.city-list__item {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 5px;
+    align-items: center;
+    border-radius: 10px;
+    padding-inline: 8px;
+    cursor: pointer;
+}
+
+.city-list__item button {
+    width: 40px;
+    height: 30px;
+}
+
+.city-list__item button:hover {
+    transform: scale(1.1);
+}
+
+.city-list__item:hover {
+    background-color: #e6e6e6;
+}
+
+.city-list__city-name {
+    font-size: 24px; 
+}
+
+
+.weather-today__forecast {
+    max-height: 200px;
+    overflow: auto;
+
+}
+
+.forecast__item {
+    margin-top: 20px;
+}
+
+.forecast__time {
+    margin-bottom: 10px;
+}
+
+.forecast__line {
+    display: block;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%;
+    height: 1px;
+    background-color: #333;
+}
+
+@media (max-width: 1000px) {
+    .weather-today__temp {
+        font-size: 48px;
+    }
+    .weather-container {
+        width: 70%;
+    }
+
+    .weather-today__icon img{
+        width: 40px;
+    }
+    h2 {
+        font-size: 22px;
+    }
+    p {
+        font-size: 16px;
+    }
+    .city-list__city-name {
+        font-size: 20px;
+    }
+    .weather-today__icon {
+        font-size: 12px;
+    }
+}
