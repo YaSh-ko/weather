@@ -3,20 +3,19 @@ import { likedCities } from "./likedCities.js";
 import { renderWeather, renderForecast, renderLikedCities, showLoading, getElements } from "./ui.js";
 import { saveCurrentCity, loadCurrentCity } from "./utils.js";
 
-const els = getElements();
+const elements = getElements();
 
 document.addEventListener('DOMContentLoaded', ()=> {
     const savedCity = loadCurrentCity();
-    console.log(savedCity);
     if(savedCity) {
         loadWeather(savedCity);
     }
     likedCities.init();
-    renderLikedCities(likedCities.list, els.cityList, deleteCity, selectCity);
+    renderLikedCities(likedCities.list, elements.cityList, deleteCity, selectCity);
 })
 
-els.form.addEventListener('submit', onSubmit);
-els.likeBtn.addEventListener('click', toogleLike);
+elements.form.addEventListener('submit', onSubmit);
+elements.likeBtn.addEventListener('click', toogleLike);
 
 function onSubmit(e) {
     e.preventDefault();
@@ -26,7 +25,7 @@ function onSubmit(e) {
         return alert("Введите название города");
     }
  
-    showLoading(els.imgContainer);
+    showLoading(elements.imgContainer);
 
     saveCurrentCity(cityName);
     loadWeather(cityName);
@@ -35,28 +34,41 @@ function onSubmit(e) {
 function loadWeather(cityName) {
     getWeather(cityName)
         .then(data => {
-            renderWeather(data, cityName, els);
+            renderWeather(data, cityName, elements);
             syncLikeBtn(cityName);
-            renderForecast(data, els.forecastContainer);
+            renderForecast(data, elements.forecastContainer);
         })
-        .catch(() => {
-            alert("Не знаю такого города");
+        .catch((error) => {
+            handleWeatherError(error);
         })
 }
 
+function handleWeatherError(error) {
+    const errorMessage = error.toString();
+
+    if (errorMessage.includes('Failed to fetch')) {
+        alert("Нет интернета");
+    } else if (errorMessage.includes('404')) {
+        alert("Город не найден");
+    } else {
+        alert("Ошибка: " + errorMessage);
+    }
+}
+
 function toogleLike() {
-    const cityName = els.currentCity.textContent;
+    const cityName = elements.currentCity.textContent;
     if(!cityName) return;
 
     if(likedCities.list.includes(cityName)) {
         likedCities.deleteCity(cityName);
-        els.likeBtn.classList.remove('active');
-    } else {
+        elements.likeBtn.classList.remove('active');
+    } 
+    if(!likedCities.list.includes(cityName)) {
         likedCities.addCity(cityName);
-        els.likeBtn.classList.add('active');
+        elements.likeBtn.classList.add('active');
     }
 
-    renderLikedCities(likedCities.list, els.cityList, deleteCity, selectCity);
+    renderLikedCities(likedCities.list, elements.cityList, deleteCity, selectCity);
 }
 
 function selectCity(city) {
@@ -67,16 +79,17 @@ function selectCity(city) {
 
 function deleteCity(city)  {
     likedCities.deleteCity(city);
-    renderLikedCities(likedCities.list, els.cityList, deleteCity, selectCity);
+    renderLikedCities(likedCities.list, elements.cityList, deleteCity, selectCity);
 
     syncLikeBtn(city);
 }
 
 function syncLikeBtn(cityName) {
     if (likedCities.list.includes(cityName)) {
-        els.likeBtn.classList.add('active');
-    } else {
-        els.likeBtn.classList.remove('active');
+        elements.likeBtn.classList.add('active');
+    } 
+    if (!likedCities.list.includes(cityName)) {
+        elements.likeBtn.classList.remove('active');
     }
 }
 
