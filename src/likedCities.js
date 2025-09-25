@@ -1,19 +1,20 @@
 export const likedCities = {
-    list: [],
+    list: new Set(),
     init() {
-        this.list = JSON.parse(localStorage.getItem('likedCities')) || [];
+        const saved = JSON.parse(localStorage.getItem('likedCities')) || []; 
+        this.list = new Set(saved);
         return this;
     },
     addCity(city) {
-        this.list.push(city);
+        this.list.add(city);
         this.save();
     },
     deleteCity(city) {
-        this.list = this.list.filter(elem => elem !== city);
+        this.list.delete(city);
         this.save();
     },
     save() {
-        localStorage.setItem('likedCities', JSON.stringify(this.list));
+        localStorage.setItem('likedCities', JSON.stringify([...this.list]));
     }
 
 }

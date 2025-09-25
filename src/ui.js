@@ -23,8 +23,8 @@ export function renderForecast(data, container) {
     const list = data.list;
     container.textContent = '';
     for(let period = 1; period < list.length; period++) {
-        
-        if(list[period].dt_txt >= "2025-09-24 00:00:00") break;
+        console.log(list[period].dt_txt.split(' ')[1]);
+        if(list[period].dt_txt.split(' ')[1] === "00:00:00") break;
         
         const forecastItem = document.createElement('div');
         forecastItem.className = 'forecast__item';
@@ -47,6 +47,7 @@ export function renderForecast(data, container) {
         forecastItem.appendChild(lineElement);
 
         container.appendChild(forecastItem);
+        console.log(container);
     }
 }
 

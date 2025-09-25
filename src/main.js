@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
         loadWeather(savedCity);
     }
     likedCities.init();
-    renderLikedCities(likedCities.list, elements.cityList, deleteCity, selectCity);
+    renderLikedCities([...likedCities.list], elements.cityList, deleteCity, selectCity);
 })
 
 elements.form.addEventListener('submit', onSubmit);
@@ -34,6 +34,7 @@ function onSubmit(e) {
 function loadWeather(cityName) {
     getWeather(cityName)
         .then(data => {
+            console.log(data);
             renderWeather(data, cityName, elements);
             syncLikeBtn(cityName);
             renderForecast(data, elements.forecastContainer);
@@ -59,36 +60,35 @@ function toogleLike() {
     const cityName = elements.currentCity.textContent;
     if(!cityName) return;
 
-    if(likedCities.list.includes(cityName)) {
+    if(likedCities.list.has(cityName)) {
         likedCities.deleteCity(cityName);
         elements.likeBtn.classList.remove('active');
     } 
-    if(!likedCities.list.includes(cityName)) {
+    if(!likedCities.list.has(cityName)) {
         likedCities.addCity(cityName);
         elements.likeBtn.classList.add('active');
     }
 
-    renderLikedCities(likedCities.list, elements.cityList, deleteCity, selectCity);
+    renderLikedCities([...likedCities.list], elements.cityList, deleteCity, selectCity);
 }
 
 function selectCity(city) {
     loadWeather(city);
-    console.log(city);
     saveCurrentCity(city);
 }
 
 function deleteCity(city)  {
     likedCities.deleteCity(city);
-    renderLikedCities(likedCities.list, elements.cityList, deleteCity, selectCity);
+    renderLikedCities([...likedCities.list], elements.cityList, deleteCity, selectCity);
 
     syncLikeBtn(city);
 }
 
 function syncLikeBtn(cityName) {
-    if (likedCities.list.includes(cityName)) {
+    if (likedCities.list.has(cityName)) {
         elements.likeBtn.classList.add('active');
     } 
-    if (!likedCities.list.includes(cityName)) {
+    if (!likedCities.list.has(cityName)) {
         elements.likeBtn.classList.remove('active');
     }
 }
