@@ -1,13 +1,8 @@
 import { API } from './constants.js';
 
-export function getWeather(cityName) {
+export async function getWeather(cityName) {
     const url = `${API.url}forecast?q=${cityName}&appid=${API.key}`;
-    return fetch(url) 
-        .then(response => {
-            if(!response.ok) {
-                return Promise.reject(`Ошибка API ${response.status}`);
-            }
-            return response.json();
-        }) 
+    const response = await fetch(url);
+    return await response.json();
 }
 
